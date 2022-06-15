@@ -1,13 +1,16 @@
 package com.example.agendabasica;
 
+import android.app.Activity;
 import android.os.Bundle;
 
+import com.example.agendabasica.ViewModels.ActividadViewModel;
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.View;
 
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -35,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-
+        ActividadViewModel model = new ViewModelProvider(this).get(ActividadViewModel.class);
     }
 
     @Override

@@ -7,13 +7,19 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.example.agendabasica.Dto.EventoDto;
+import com.example.agendabasica.ViewModels.ActividadViewModel;
 import com.example.agendabasica.databinding.FragmentFirstBinding;
+
+import java.util.List;
 
 public class FirstFragment extends Fragment implements View.OnClickListener {
 
     private FragmentFirstBinding binding;
+    private ActividadViewModel viewModel;
 
     @Override
     public View onCreateView(
@@ -27,7 +33,11 @@ public class FirstFragment extends Fragment implements View.OnClickListener {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        viewModel = new ViewModelProvider(requireActivity()).get(ActividadViewModel.class);
 
+        viewModel.ObtenerEventos().observe(getViewLifecycleOwner(), item -> {
+            List<EventoDto> listaEventos = item;
+        });
         binding.addNewEventButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

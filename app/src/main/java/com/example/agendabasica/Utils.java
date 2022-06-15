@@ -16,7 +16,8 @@ public class Utils {
         StringBuilder horaBuilder = new StringBuilder();
         horaBuilder.append(hourOfDay);
         horaBuilder.append(":");
-        horaBuilder.append(minute);
+        String minutosPadding = String.format("%02d", minute);
+        horaBuilder.append(minutosPadding);
         horaBuilder.append(" ");
         String aux = hourOfDay >= 12 ? "PM" : "AM";
         horaBuilder.append(aux);
