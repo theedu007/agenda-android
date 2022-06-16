@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
@@ -16,7 +18,7 @@ import com.example.agendabasica.databinding.FragmentFirstBinding;
 
 import java.util.List;
 
-public class FirstFragment extends Fragment implements View.OnClickListener {
+public class FirstFragment extends Fragment {
 
     private FragmentFirstBinding binding;
     private ActividadViewModel viewModel;
@@ -37,6 +39,15 @@ public class FirstFragment extends Fragment implements View.OnClickListener {
 
         viewModel.ObtenerEventos().observe(getViewLifecycleOwner(), item -> {
             List<EventoDto> listaEventos = item;
+            if (listaEventos.size() > 0) {
+                FragmentManager fm = getParentFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                for (int i = 0; i < item.size(); i++) {
+                    ActividadFragment fragment = ActividadFragment.newInstance(item.get(i));
+                    ft.add(R.id.idActividadLinearLayout, fragment, String.valueOf(i) + "_frag");
+                }
+                ft.commit();
+            }
         });
         binding.addNewEventButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,10 +62,5 @@ public class FirstFragment extends Fragment implements View.OnClickListener {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
-    }
-
-    @Override
-    public void onClick(View v) {
-
     }
 }
